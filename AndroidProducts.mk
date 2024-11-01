@@ -5,4 +5,4 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/lineage_garnet.mk
+    $(LOCAL_DIR)/pixelage_garnet.mk
