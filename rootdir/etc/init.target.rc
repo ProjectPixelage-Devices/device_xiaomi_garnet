@@ -297,7 +297,6 @@ on property:init.svc.vendor.charger=running
     start vendor.power_off_alarm
     setprop sys.usb.controller a600000.dwc3
     wait /sys/class/udc/${sys.usb.controller}
-    setprop sys.usb.configfs 1
     write /sys/devices/system/cpu/qcom_lpm/parameters/sleep_disabled 0
 
 on property:vendor.audio.cit.spkcal.copy=true
