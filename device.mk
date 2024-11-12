@@ -469,6 +469,7 @@ PRODUCT_PACKAGES += \
     libjson \
     libjsoncpp.vendor \
     libqti_vndfwk_detect.vendor \
+    libqti_vndfwk_detect_vendor \
     libsqlite.vendor \
     libvndfwk_detect_jni.qti_vendor \
     vendor.qti.hardware.systemhelper@1.0.vendor
