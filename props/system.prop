@@ -10,6 +10,10 @@ persist.camera.ois.video=1
 persist.vendor.camera.ois.enable=1
 persist.vendor.camera.ois.video=1
 
+# Deep Sleep
+pm.sleep_mode=1
+vendor.post_boot.parsed=1s
+
 # QTI
 ro.vendor.qti.va_aosp.support=1
 
