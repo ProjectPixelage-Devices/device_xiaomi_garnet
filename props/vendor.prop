@@ -92,6 +92,7 @@ ro.soc.manufacturer=QTI
 # Display
 ro.vendor.display.sensortype=2
 ro.vendor.display.svi=1
+ro.config.avoid_gfx_accel=true
 vendor.display.comp_mask=0
 vendor.display.disable_3d_adaptive_tm=0
 vendor.display.disable_excl_rect=0
