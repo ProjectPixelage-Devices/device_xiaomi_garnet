@@ -111,10 +111,12 @@ on property:vendor.post_boot.parsed=1
     write /proc/sys/kernel/sched_group_downmigrate 80
 
     # Configure uclamp
+    write /dev/cpuctl/top-app/cpu.uclamp.min 1.00
+    write /dev/cpuctl/foreground/cpu.uclamp.min 0.00
     write /dev/cpuctl/top-app/cpu.uclamp.latency_sensitive 1
-    write /dev/cpuctl/background/cpu.uclamp.max 50
-    write /dev/cpuctl/system-background/cpu.uclamp.max 50
-    write /dev/cpuctl/dex2oat/cpu.uclamp.max 60
+    write /dev/cpuctl/background/cpu.uclamp.max 512
+    write /dev/cpuctl/system-background/cpu.uclamp.max 512
+    write /dev/cpuctl/dex2oat/cpu.uclamp.max 615
     # Setup cpu.shares to throttle background groups (bg ~ 5% sysbg ~ 5% dex2oat ~2.5%)
     write /dev/cpuctl/background/cpu.shares 1024
     write /dev/cpuctl/system-background/cpu.shares 1024
