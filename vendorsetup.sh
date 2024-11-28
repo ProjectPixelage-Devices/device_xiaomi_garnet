@@ -2,7 +2,7 @@ echo 'Cloning stuffs to build for garnet'
 
 # Clone primary tree
 git clone --depth=1 https://github.com/Soverzion-HQ/vendor_xiaomi_garnet -b 15 vendor/xiaomi/garnet
-git clone --depth=1 https://github.com/Soverzion-HQ/device_xiaomi_garnet-prebuilt -b sk-ksu device/xiaomi/garnet-prebuilt
+git clone --depth=1 https://github.com/Soverzion-HQ/device_xiaomi_garnet-kernel -b sk-ksu device/xiaomi/garnet-kernel
 
 # Hardware Xiaomi
 rm -rf hardware/xiaomi
