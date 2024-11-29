@@ -1,5 +1,5 @@
 #=============================================================================
-# Copyright (c) 2019-2022 Qualcomm Technologies, Inc.
+# Copyright (c) 2019-2023 Qualcomm Technologies, Inc.
 # All Rights Reserved.
 # Confidential and Proprietary - Qualcomm Technologies, Inc.
 #
@@ -29,6 +29,11 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #=============================================================================
+
+if [[ "$(getprop vendor.post_boot.custom)" == "true" ]]; then
+  echo "Device overrides post_boot, skipping $0"
+  exit 0
+fi
 
 function configure_zram_parameters() {
 	MemTotalStr=`cat /proc/meminfo | grep MemTotal`
@@ -102,7 +107,6 @@ function configure_read_ahead_kb_values() {
 }
 
 function configure_memory_parameters() {
-	ProductName=`getprop ro.product.name`
 	configure_zram_parameters
 	configure_read_ahead_kb_values
 
@@ -128,12 +132,7 @@ function configure_memory_parameters() {
 	fi
 	# Disable wsf for all targets beacause we are using efk.
 	# wsf Range : 1..1000 So set to bare minimum value 1.
-	if [ "$ProductName" == "garnet" ] ; then
-		echo 10 > /proc/sys/vm/watermark_scale_factor
-	else
-		echo 1 > /proc/sys/vm/watermark_scale_factor
-	fi
-	# echo 1 > /proc/sys/vm/watermark_scale_factor
+	echo 1 > /proc/sys/vm/watermark_scale_factor
 
 	#Set per-app max kgsl reclaim limit and per shrinker call limit
 	if [ -f /sys/class/kgsl/kgsl/page_reclaim_per_call ]; then
@@ -147,19 +146,19 @@ function configure_memory_parameters() {
 # Set Memory parameters.
 configure_memory_parameters
 
-if [ -f /sys/devices/soc0/soc_id ]; then
-	platformid=`cat /sys/devices/soc0/soc_id`
+if [ -f /sys/devices/soc0/chip_family ]; then
+	chipfamily=`cat /sys/devices/soc0/chip_family`
 fi
 
-case "$platformid" in
-	"537" | "583" | "613")
+case "$chipfamily" in
+	"0x84")
 		/vendor/bin/sh /vendor/bin/init.kernel.post_boot-parrot.sh
 		;;
-	"568" | "602" | "581" | "582")
+	"0x8d")
 		/vendor/bin/sh /vendor/bin/init.kernel.post_boot-ravelin.sh
 		;;
 	*)
-		echo "***WARNING***: Invalid SoC ID\n\t No postboot settings applied!!\n"
+		echo "***WARNING***: Invalid chip family\n\t No postboot settings applied!!\n"
 		;;
 esac
 
