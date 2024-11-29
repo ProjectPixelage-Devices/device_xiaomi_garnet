@@ -44,10 +44,10 @@ on post-fs-data
     mkdir /mnt/vendor/persist/fpc 0770 system system
 
     # IRQ Tuning
-    # IRQ 218: msm_drm0
-    # IRQ 209: kgsl_3d0_irq
-    write /proc/irq/209/smp_affinity_list 1
-    write /proc/irq/218/smp_affinity_list 2
+    # IRQ 218: msm_drm0 -> CPU 7
+    # IRQ 209: kgsl_3d0_irq -> CPU 6
+    write /proc/irq/209/smp_affinity_list 7
+    write /proc/irq/218/smp_affinity_list 6
 
     # Setup dex2oat thread count and cpuset
     setprop dalvik.vm.dex2oat-cpu-set 0,1,2,3,4,5,6
