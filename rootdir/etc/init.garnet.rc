@@ -43,6 +43,12 @@ on post-fs-data
     mkdir /mnt/vendor/persist/goodix 0770 system system
     mkdir /mnt/vendor/persist/fpc 0770 system system
 
+    # IRQ Tuning
+    # IRQ 218: msm_drm0
+    # IRQ 209: kgsl_3d0_irq
+    write /proc/irq/209/smp_affinity_list 1
+    write /proc/irq/218/smp_affinity_list 2
+
     # Setup dex2oat thread count and cpuset
     setprop dalvik.vm.dex2oat-cpu-set 0,1,2,3,4,5,6
     setprop dalvik.vm.dex2oat-threads 6
@@ -86,9 +92,18 @@ on property:ro.boot.product.hardware.sku=JP
 on property:sys.boot_completed=1
     write /sys/devices/virtual/thermal/thermal_message/sconfig 20
 
+    # IRQ Tuning
+    # IRQ 218: msm_drm0
+    # IRQ 209: kgsl_3d0_irq
+    write /proc/irq/209/smp_affinity_list 1
+    write /proc/irq/218/smp_affinity_list 2
+
 on property:vendor.post_boot.parsed=1
     # Set restricted cpuset to the same CPUs as system-background
     copy /dev/cpuset/system-background/cpus /dev/cpuset/restricted/cpus
+
+# Dynamically set IRQ affinity for KGSL and DRM
+    exec u:r:vendor_qti_init_shell:s0 -- /vendor/bin/init.garnet.sh
 
 service vendor.audio-hal /vendor/bin/hw/android.hardware.audio.service
     override
